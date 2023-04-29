@@ -1,12 +1,12 @@
 import React, {useContext} from 'react'
 import { Link } from 'react-router-dom'
 import { useLocation } from "react-router-dom";
-import image from "./unnamed.png"
+import logoImage from "./unnamed.png"
 import { UserContext } from "../App";
 
 const Nav = () => {
 
-  const {state,dispatch} = useContext(UserContext)
+  const {state} = useContext(UserContext)
   const { value } = useLocation();
   const RenderMenu = () =>{
     if(state){
@@ -51,7 +51,7 @@ const Nav = () => {
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container">
             <Link className="navbar-brand" to={'/sign-in'}>
-              <img src={image} alt="Image"></img>
+              <img src={logoImage} alt="logo"></img>
             </Link>
             <RenderMenu />
           </div>

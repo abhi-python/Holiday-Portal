@@ -1,7 +1,6 @@
 import React, {  useState } from "react";
 import dayjs from "dayjs";
 import Nav from "./nav";
-import { useLocation } from "react-router-dom";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, DatePicker, Space, Checkbox } from "antd";
 import moment from "moment/moment";
@@ -12,16 +11,12 @@ import CardComponent from "./cardCom";
 import '../style.css'
 
 const Home = () => {
-  const { state } = useLocation();
-  const [datesToBeApplied,setDatesToBeApplied]=useState([]);
-  const [formValues, setValues] = useState([]);
+  const [datesToBeApplied]=useState([]);
   const [cardData,setCardData]=useState([]);
 
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    // console.log(values);
-    // setValues(values);
     if (values.companyHolidays?.length >= 3) {
       let count = 0;
       let endDate = addDays(new Date(values.startDate?.$d?.valueOf()), values.numDays - 1);
@@ -31,7 +26,7 @@ const Home = () => {
       })?.map((x) => { return format(x, 'yyyy-MM-dd') });
 
       let datesToBeApplied=[];
-     datesToBeApplied= values.companyHolidays.map((item,index) => {
+     datesToBeApplied= values.companyHolidays.map((item) => {
         if (isWithinInterval(new Date(item?.date.$d?.valueOf()), {
           start: startDate,
           end: endDate
@@ -80,17 +75,6 @@ const Home = () => {
     let value = e.target.checked;
     form.setFieldValue(name, value)
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-  // const validateUsername = (_, value) => {
-  //   if (value && value.length < 5) {
-  //     return Promise.reject("Username must be at least 5 characters long");
-  //   }
-  //   return Promise.resolve();
-  // };
-  // const cardData=[formValues].concat(datesToBeApplied)||[];
-  console.log(cardData)
   return (
     <>
       <Nav />
@@ -122,7 +106,6 @@ const Home = () => {
                 required: true,
                 message: "Please enter number of days!",
               },
-              // { validator: validateUsername },
             ]}
           >
             <Input type="number" />
@@ -136,7 +119,6 @@ const Home = () => {
                 required: true,
                 message: "Required",
               },
-              // { validator: validateUsername },
             ]}
           >
             <DatePicker inputReadOnly format="ddd DD MMM YYYY" disabledDate={disabledDate} />
@@ -204,8 +186,6 @@ const Home = () => {
         {cardData?.map((item,index)=>(
           <CardComponent 
           key={index}
-            // formData = {formValues}
-            // leaveDates= {datesToBeApplied}
             cardData={item}
           />
         ))}
