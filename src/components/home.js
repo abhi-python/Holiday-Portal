@@ -49,7 +49,7 @@ const Home = () => {
             }
             return;
           }
-          else return x;
+          else{return x;}
         }) 
         if(printDate.length < values.numDays){
           let arr=[];
@@ -62,7 +62,7 @@ const Home = () => {
         }
         
         
-       
+       return
       })
       setCardData([...cardData,{...values,datesToBeApplied:datesToBeApplied[0]}])
     }
